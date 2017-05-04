@@ -1,5 +1,11 @@
-<h1><%= @train.name() %></h1>
+<h1>Recepit for travel</h1>
+<h4>Receipt#<%= rand(1000) %></h4>
+
 <div class="row">
+  <div class="col-md-4">
+    <h2>Train name</h2>
+    <h4><%= @train.name() %></h4>
+  </div>
   <div class="col-md-4">
     <h2>Departure</h2>
     <h4>Time: <%= @train.departure_time() %></h4>
@@ -16,8 +22,4 @@
   <h5><%= city.name() %></h5>
 <% end %>
 
-<h3>Ticket Price</h3>
-<h3>$<%= @train.ticket_price() %></h3>
-<form action="/receipt/<%= @train.id() %>" method="post">
-  <button type="submit" name="button">Buy Your Ticket</button>
-</form>
+<a href="/" class = "btn btn-success active" role = "button">Home</a>

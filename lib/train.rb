@@ -1,5 +1,5 @@
 class Train
-  attr_reader(:name, :id, :departure_time, :departure_location, :arrival_time, :arrival_location)
+  attr_reader(:name, :id, :departure_time, :departure_location, :arrival_time, :arrival_location, :ticket_price)
 
   def initialize(attributes)
     @name = attributes.fetch(:name)
@@ -8,6 +8,7 @@ class Train
     @departure_location = attributes.fetch(:departure_location)
     @arrival_time = attributes.fetch(:arrival_time)
     @arrival_location = attributes.fetch(:arrival_location)
+    @ticket_price = attributes.fetch(:ticket_price)
   end
 
   def self.all
@@ -20,18 +21,19 @@ class Train
         departure_location = train.fetch('departure_location')
         arrival_time = train.fetch('arrival_time')
         arrival_location = train.fetch('arrival_location')
-        trains.push(Train.new({:id => id, :name => name, :departure_time => departure_time, :departure_location=> departure_location, :arrival_time => arrival_time, :arrival_location=> arrival_location}))
+        ticket_price = train.fetch('ticket_price').to_i()
+        trains.push(Train.new({:id => id, :name => name, :departure_time => departure_time, :departure_location=> departure_location, :arrival_time => arrival_time, :arrival_location=> arrival_location, :ticket_price => ticket_price}))
       end
       trains
     end
 
     def save
-      result = DB.exec("INSERT INTO trains (name, departure_time, departure_location, arrival_time, arrival_location) VALUES ('#{@name}', '#{@departure_time}','#{@departure_location}','#{@arrival_time}','#{@arrival_location}') RETURNING id;")
+      result = DB.exec("INSERT INTO trains (name, departure_time, departure_location, arrival_time, arrival_location, ticket_price) VALUES ('#{@name}', '#{@departure_time}','#{@departure_location}','#{@arrival_time}','#{@arrival_location}', '#{@ticket_price}') RETURNING id;")
       @id = result.first().fetch("id").to_i()
     end
 
     def ==(another_train)
-      (self.name() == another_train.name()) && (self.id() == another_train.id())  && (self.departure_time() == another_train.departure_time()) && (self.departure_location() == another_train.departure_location()) && (self.arrival_time() == another_train.arrival_time()) && (self.arrival_location() == another_train.arrival_location())
+      (self.name() == another_train.name()) && (self.id() == another_train.id())  && (self.departure_time() == another_train.departure_time()) && (self.departure_location() == another_train.departure_location()) && (self.arrival_time() == another_train.arrival_time()) && (self.arrival_location() == another_train.arrival_location()) && (self.ticket_price() == another_train.ticket_price())
     end
 
     def self.find(id)
@@ -52,8 +54,9 @@ class Train
       @departure_location = attributes.fetch(:departure_location, @departure_location)
       @arrival_time = attributes.fetch(:arrival_time, @arrival_time)
       @arrival_location = attributes.fetch(:arrival_location, @arrival_location)
+      @ticket_price = attributes.fetch(:ticket_price, @ticket_price)
       @id = self.id()
-      DB.exec("UPDATE trains SET name = '#{@name}', departure_time = '#{@departure_time}', departure_location = '#{@departure_location}', arrival_time = '#{@arrival_time}', arrival_location = '#{@arrival_location}'  WHERE id = #{@id};")
+      DB.exec("UPDATE trains SET name = '#{@name}', departure_time = '#{@departure_time}', departure_location = '#{@departure_location}', arrival_time = '#{@arrival_time}', arrival_location = '#{@arrival_location}', ticket_price = '#{@ticket_price}'  WHERE id = #{@id};")
 
       attributes.fetch(:city_ids, []).each() do |city_id|
         DB.exec("INSERT INTO stops (city_id, train_id) VALUES (#{city_id}, #{self.id()});")

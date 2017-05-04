@@ -63,8 +63,9 @@ class City
        departure_location = train.first().fetch('departure_location')
        arrival_time = train.first().fetch('arrival_time')
        arrival_location = train.first().fetch('arrival_location')
+       ticket_price = train.first().fetch('ticket_price').to_i()
 
-       city_trains.push(Train.new({:id => id, :name => name, :departure_time => departure_time, :departure_location=> departure_location, :arrival_time => arrival_time, :arrival_location=> arrival_location}))
+       city_trains.push(Train.new({:id => id, :name => name, :departure_time => departure_time, :departure_location=> departure_location, :arrival_time => arrival_time, :arrival_location=> arrival_location, :ticket_price => ticket_price}))
      end
      city_trains
    end

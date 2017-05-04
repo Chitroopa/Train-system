@@ -24,6 +24,11 @@ get('/rider') do
   erb(:rider)
 end
 
+post('/receipt/:id') do
+  @train = Train.find(params.fetch("id").to_i())
+  erb(:receipt)
+end
+
 post('/rider/trains') do
   city_id = params.fetch('city_id').to_i()
   @city = City.find(city_id)
@@ -35,6 +40,7 @@ get('/rider/trains/:id') do
   @cities = City.all()
   erb(:rider_train_info)
 end
+
 get('/trains/:id') do
   @train = Train.find(params.fetch("id").to_i())
   @cities = City.all()
@@ -102,7 +108,8 @@ post('/train/new') do
   departure_location = params.fetch("departure_location")
   arrival_time = params.fetch("arrival_time")
   arrival_location = params.fetch("arrival_location")
-  new_train = Train.new({:name => name, :departure_time => departure_time, :departure_location => departure_location, :arrival_time => arrival_time, :arrival_location => arrival_location, :id => nil})
+  ticket_price = params.fetch("ticket_price")
+  new_train = Train.new({:name => name, :departure_time => departure_time, :departure_location => departure_location, :arrival_time => arrival_time, :arrival_location => arrival_location, :ticket_price => ticket_price, :id => nil})
   new_train.save()
   @trains = Train.all()
   @cities = City.all()
