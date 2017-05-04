@@ -57,7 +57,21 @@ describe (City) do
       train2.save()
       city.update({:train_ids => [train1.id(), train2.id()]})
 
-      expect(city.trains()).to eq([train1, train2]) 
+      expect(city.trains()).to eq([train1, train2])
+    end
+  end
+
+  describe("#trains") do
+    it("lets you add a train to a city") do
+      city = City.new({:name => "Seattle", :id => nil})
+      city.save()
+      train1 = Train.new({:name => 'Portland express', :id => nil, :departure_time => '10:00:00', :departure_location => "Seattle", :arrival_time => '11:00:00', :arrival_location => "Portland"} )
+      train1.save()
+      train2 = Train.new({:name => 'L.A. express', :id => nil, :departure_time => '10:00:00', :departure_location => "Seattle", :arrival_time => '11:00:00', :arrival_location => "L.A."} )
+      train2.save()
+      city.update({:train_ids => [train1.id(), train2.id()]})
+
+      expect(city.trains()).to eq([train1, train2])
     end
   end
 

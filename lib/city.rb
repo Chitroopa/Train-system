@@ -56,7 +56,7 @@ class City
        train_id = result.fetch("train_id").to_i()
 
        train = DB.exec("SELECT * FROM trains WHERE id = #{train_id};")
-       
+
        name = train.first().fetch('name')
        id = train.first().fetch('id').to_i()
        departure_time = train.first().fetch('departure_time')
@@ -70,6 +70,7 @@ class City
    end
 
   def delete
+    DB.exec("DELETE FROM stops WHERE city_id = #{self.id()};")
     DB.exec("DELETE FROM cities WHERE id = #{self.id()};")
   end
 

@@ -51,6 +51,31 @@ describe (Train) do
       train.update({:departure_time => '11:00:00'})
       expect(train.departure_time()).to(eq("11:00:00"))
     end
+
+    it("lets you add a city to the train's route") do
+      train = Train.new({:name => 'Portland express', :id => nil, :departure_time => '10:00:00', :departure_location => "Seattle", :arrival_time => '11:00:00', :arrival_location => "Portland"} )
+      train.save()
+      city = City.new({:name => "Seattle", :id => nil})
+      city.save()
+      city2 = City.new({:name => "L.A.", :id => nil})
+      city2.save()
+      train.update({:city_ids => [city.id(), city2.id()]})
+
+      expect(train.cities()).to eq([city, city2])
+    end
+  end
+  describe('#cities') do
+    it("lets you add a city to the train's route") do
+      train = Train.new({:name => 'Portland express', :id => nil, :departure_time => '10:00:00', :departure_location => "Seattle", :arrival_time => '11:00:00', :arrival_location => "Portland"} )
+      train.save()
+      city = City.new({:name => "Seattle", :id => nil})
+      city.save()
+      city2 = City.new({:name => "L.A.", :id => nil})
+      city2.save()
+      train.update({:city_ids => [city.id(), city2.id()]})
+
+      expect(train.cities()).to eq([city, city2])
+    end  
   end
 
   describe("#delete") do

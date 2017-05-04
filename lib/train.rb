@@ -47,9 +47,30 @@ class Train
       @arrival_location = attributes.fetch(:arrival_location, @arrival_location)
       @id = self.id()
       DB.exec("UPDATE trains SET name = '#{@name}', departure_time = '#{@departure_time}', departure_location = '#{@departure_location}', arrival_time = '#{@arrival_time}', arrival_location = '#{@arrival_location}'  WHERE id = #{@id};")
+
+      attributes.fetch(:city_ids, []).each() do |city_id|
+        DB.exec("INSERT INTO stops (city_id, train_id) VALUES (#{city_id}, #{self.id()});")
+      end
+    end
+
+    def cities
+      train_stops = []
+      results = DB.exec("SELECT city_id FROM stops WHERE train_id = #{self.id()};")
+      results.each() do |result|
+        city_id = result.fetch("city_id").to_i()
+
+        city = DB.exec("SELECT * FROM cities WHERE id = #{city_id};")
+
+        name = city.first().fetch('name')
+        id = city.first().fetch('id').to_i()
+
+        train_stops.push(City.new({:id => id, :name => name}))
+      end
+      train_stops
     end
 
     def delete
+      DB.exec("DELETE FROM stops WHERE train_id = #{self.id()};")
       DB.exec("DELETE FROM trains WHERE id = #{self.id()};")
     end
 
