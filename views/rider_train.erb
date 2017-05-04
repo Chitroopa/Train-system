@@ -1,0 +1,7 @@
+<h1>Please Select your Ticket</h1>
+
+<h1><%= @city.name() %></h1>
+<h4>Trains that pass through <%= @city.name() %> are:</h4>
+<% @city.trains().each() do |train| %>
+  <a href="/rider/trains/<%= train.id()%>"><%= train.name() %></a><br>
+<% end %>

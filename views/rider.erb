@@ -1,0 +1,11 @@
+<h1>Hello rider please select your destination</h1>
+
+<form action="/rider/trains" method="post">
+    <label for="city_id">Select your destination city</label>
+    <select id = "city_id" name="city_id" type = "text">
+      <% @cities.each() do |city| %>
+      <option value = "<%= city.id() %>"> <%= city.name() %> </option>
+      <% end %>
+    </select>
+    <button type="submit">Check Trains</button>
+</form>

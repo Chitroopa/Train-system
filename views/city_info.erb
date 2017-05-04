@@ -21,10 +21,18 @@
     <button type="submit">Add trains</button>
   </form>
 <% end %>
-<br>
-<a href="/system_operator" class = "btn btn-success active" role = "button">Go Back</a>
-
-<form action="/cities/<%= @city.id() %>" method="post">
-  <input type="hidden" name="_method" value="delete">
-  <button class = "btn btn-danger active" type="submit">Delete</button>
-</form>
+<div class="row">
+  <br>
+  <div class="col-md-2">
+    <a href="/system_operator" class = "btn btn-success active" role = "button">Go Back</a>
+  </div>
+  <div class="col-md-2">
+    <form action="/cities/<%= @city.id() %>" method="post">
+      <input type="hidden" name="_method" value="delete">
+      <button class = "btn btn-danger active" type="submit">Delete <%= @city.name() %></button>
+    </form>
+  </div>
+  <div class="col-md-2">
+    <a href="/train/new" class = "btn btn-primary active" role = "button">Click here to add a new train</a>
+  </div>
+</div>
