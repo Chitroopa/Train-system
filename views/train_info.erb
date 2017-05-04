@@ -19,7 +19,7 @@
 <h3>Select all cities you want the train to service:</h3>
 
 <% if @cities.any?() %>
-  <form action="/trains/<%= train.id %>" method="post">
+  <form action="/trains/<%= @train.id %>" method="post">
     <input type="hidden" name="_method" value="patch">
 
     <% @cities.each() do |city| %>
@@ -33,3 +33,10 @@
     <button type="submit">Add cities</button>
   </form>
 <% end %>
+<br>
+<a href="/system_operator" class = "btn btn-success active" role = "button">Go Back</a>
+<br>
+<form action="/trains/<%= @train.id() %>" method="post">
+  <input type="hidden" name="_method" value="delete">
+  <button class = "btn btn-danger active" type="submit">Delete</button>
+</form>

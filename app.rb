@@ -34,11 +34,34 @@ patch('/trains/:id') do
   erb(:train_info)
 end
 
+delete('/trains/:id') do
+  @train = Train.find(params.fetch("id").to_i())
+  @train.delete()
+  @trains = Train.all()
+  @cities = City.all()
+  erb(:train_system)
+end
 
 get('/cities/:id') do
   @city = City.find(params.fetch('id').to_i())
   @trains = Train.all()
   erb(:city_info)
+end
+
+patch('/cities/:id') do
+  @city = City.find(params.fetch("id").to_i())
+  train_ids = params.fetch('train_ids')
+  @city.update({:train_ids => train_ids})
+  @trains = Train.all()
+  erb(:city_info)
+end
+
+delete('/cities/:id') do
+  @city = City.find(params.fetch("id").to_i())
+  @city.delete()
+  @trains = Train.all()
+  @cities = City.all()
+  erb(:train_system)
 end
 
 get('/train/new') do

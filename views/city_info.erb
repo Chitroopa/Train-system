@@ -1,1 +1,30 @@
-<h1>No content available</h1>
+<h1><%= @city.name() %></h1>
+<h4>Trains that pass through <%= @city.name() %> are:</h4>
+<% @city.trains().each() do |train| %>
+  <h5><%= train.name() %></h5>
+<% end %>
+
+<h3>Select which train you would like to pass through this city:</h3>
+
+<% if @trains.any?() %>
+  <form action="/cities/<%= @city.id %>" method="post">
+    <input type="hidden" name="_method" value="patch">
+
+    <% @trains.each() do |train| %>
+      <div class="checkbox">
+        <label>
+          <input type="checkbox" name="train_ids[]" value="<%= train.id() %>"><%= train.name() %>
+        </label>
+      </div>
+    <% end %>
+
+    <button type="submit">Add trains</button>
+  </form>
+<% end %>
+<br>
+<a href="/system_operator" class = "btn btn-success active" role = "button">Go Back</a>
+
+<form action="/cities/<%= @city.id() %>" method="post">
+  <input type="hidden" name="_method" value="delete">
+  <button class = "btn btn-danger active" type="submit">Delete</button>
+</form>
