@@ -39,6 +39,7 @@ describe (Train) do
       test_train = Train.new({:name => 'Seattle express', :id => nil, :departure_time => '10:00:00', :departure_location => "Seattle", :arrival_time => '11:00:00', :arrival_location => "Portland"} )
       test_train.save()
       test_train2 = Train.new({:name => 'Portland express', :id => nil, :departure_time => '10:00:00', :departure_location => "Seattle", :arrival_time => '11:00:00', :arrival_location => "Portland"} )
+      test_train2.save()
       expect(Train.find(test_train2.id())).to(eq([test_train2]))
     end
   end
@@ -47,8 +48,8 @@ describe (Train) do
     it("lets you update trains in the database") do
       train = Train.new({:name => 'Portland express', :id => nil, :departure_time => '10:00:00', :departure_location => "Seattle", :arrival_time => '11:00:00', :arrival_location => "Portland"} )
       train.save()
-      train.update({:name => "Seattle Express"})
-      expect(train.name()).to(eq("Seattle Express"))
+      train.update({:departure_time => '11:00:00'})
+      expect(train.departure_time()).to(eq("11:00:00"))
     end
   end
 
