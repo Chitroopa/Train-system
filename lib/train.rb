@@ -35,8 +35,15 @@ class Train
     end
 
     def self.find(id)
-      found_train = Train.all().select{|train| train.id() == id }
-      return found_train
+      # found_train = Train.all().select{|train| train.id() == id }
+      # return found_train
+      found_train = nil
+      Train.all().each() do |train|
+        if train.id() == id
+          found_train = train
+        end
+      end
+      found_train
     end
 
     def update(attributes)

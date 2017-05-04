@@ -1,0 +1,35 @@
+<h1><%= @train.name() %></h1>
+<div class="row">
+  <div class="col-md-4">
+    <h2>Departure</h2>
+    <h4>Time: <%= @train.departure_time() %></h4>
+    <h4>Location: <%= @train.departure_location() %></h4>
+  </div>
+  <div class="col-md-4">
+    <h2>Arrival</h2>
+    <h4>Time: <%= @train.arrival_time() %></h4>
+    <h4>Location: <%= @train.arrival_location() %></h4>
+  </div>
+</div>
+<h4>Train route:</h4>
+<% @train.cities().each() do |city| %>
+  <h5><%= city.name() %></h5>
+<% end %>
+
+<h3>Select all cities you want the train to service:</h3>
+
+<% if @cities.any?() %>
+  <form action="/trains/<%= train.id %>" method="post">
+    <input type="hidden" name="_method" value="patch">
+
+    <% @cities.each() do |city| %>
+      <div class="checkbox">
+        <label>
+          <input type="checkbox" name="city_ids[]" value="<%= city.id() %>"><%= city.name() %>
+        </label>
+      </div>
+    <% end %>
+
+    <button type="submit">Add cities</button>
+  </form>
+<% end %>

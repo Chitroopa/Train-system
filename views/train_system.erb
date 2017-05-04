@@ -1,0 +1,33 @@
+<h1>Welcome System Operator</h1>
+<h5>*Remember to be careful when making changes to schedules, riders may get angry!*</h5>
+
+<p><a href="/train/new">Click here to add a new train</a></p>
+<p><a href="/train">Click here to view train schedules</a></p>
+
+<h3>Here are all the trains in this database:</h3>
+
+<% if @trains.any?() %>
+  <p>Click on a train to view the route</p>
+
+  <ul>
+    <% @trains.each do |train| %>
+      <li><a href="/trains/<%= train.id() %>"><%= train.name() %></a></li>
+    <% end %>
+  </ul>
+<% else %>
+  <p>There are no trains added yet!</p>
+<% end %>
+
+<h3>Here are all the cities in this database:</h3>
+
+<% if @cities.any?() %>
+  <p>Click on a city to see which trains pass through:</p>
+
+  <ul>
+    <% @cities.each do |city| %>
+      <li><a href="/cities/<%= city.id() %>"><%= city.name() %></a></li>
+    <% end %>
+  </ul>
+<% else %>
+  <p>There are no cities added yet!</p>
+<% end %>

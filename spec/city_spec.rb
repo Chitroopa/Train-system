@@ -36,7 +36,7 @@ describe (City) do
       test_city.save()
       test_city2 = City.new({:name => "Portland", :id => nil})
       test_city2.save()
-      expect(City.find(test_city2.id())).to(eq([test_city2]))
+      expect(City.find(test_city2.id())).to(eq(test_city2))
     end
   end
 

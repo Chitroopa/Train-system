@@ -28,15 +28,15 @@ class City
   end
 
   def self.find(id)
-    found_city = City.all().select{|city| city.id() == id }
-    return found_city
-    # found_city = nil
-    # City.all().each() do |city|
-    #   if city.id() == id
-    #     found_city = city
-    #   end
-    # end
-    # found_city
+    # found_city = City.all().select{|city| city.id() == id }
+    # return found_city
+    found_city = nil
+    City.all().each() do |city|
+      if city.id() == id
+        found_city = city
+      end
+    end
+    found_city
   end
 
   def update(attributes)
